@@ -34,3 +34,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# monorepo node_modules
+frontend/node_modules/
+node_modules/
