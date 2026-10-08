@@ -84,6 +84,10 @@ budgetbite-monorepo/
 - Design and render the Result Cards.
 - WAIT FOR USER APPROVAL.
 
-### Phase 4: Production Readiness
-- Configure environment variables for Vercel (Frontend) and Render (Backend).
-- Ensure CORS is strictly set to the production frontend URL.
+### Phase 4: Production Readiness (Completed)
+- [x] Configure environment variables for Vercel (Frontend) and Render (Backend).
+  - Provided `backend/.env.example` and `frontend/.env.example`.
+- [x] Ensure CORS is strictly set to the production frontend URL with regex support for Vercel previews.
+- [x] Configure Render deployment blueprint (`render.yaml`) and Vercel settings (`frontend/vercel.json`).
+- [x] Production timeouts, error resilience, and healthcheck endpoints (`/healthz`, `/api/v1/health`).
+- [x] Comprehensive deployment walkthrough created (`DEPLOYMENT.md`).

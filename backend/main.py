@@ -14,14 +14,23 @@ app = FastAPI(
 )
 
 # CORS configuration
-origins = [
+default_origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
 
+env_origins = os.getenv("ALLOWED_ORIGINS", "")
+if env_origins:
+    origins = [orig.strip() for orig in env_origins.split(",") if orig.strip()]
+else:
+    origins = default_origins
+
+origin_regex = os.getenv("ALLOWED_ORIGIN_REGEX", r"^https:\/\/.*\.vercel\.app$")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=origin_regex if origin_regex else None,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -40,6 +49,7 @@ def read_root():
         "docs": "/docs"
     }
 
+@app.get("/healthz")
 @app.get("/api/v1/health")
 def health_check():
     try:
@@ -92,3 +102,9 @@ def match_deals(payload: MatchRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error computing meal matches: {str(e)}")
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", 8000))
+    host = os.getenv("HOST", "0.0.0.0")
+    uvicorn.run("main:app", host=host, port=port, reload=False)
